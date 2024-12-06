@@ -12,13 +12,18 @@ function App() {
       setResult('');
     } else if (value === '=') {
       try {
-        const evalResult = evaluate(input);
-        if (evalResult === Infinity) {
-          setResult('Infinity');
-        } else if (isNaN(evalResult)) {
-          setResult('NaN');
+        // Check if the input is incomplete or invalid
+        if (!input || /[+\-*/]$/.test(input)) { // Check for operators at the end
+          setResult('Error');
         } else {
-          setResult(evalResult.toString());
+          const evalResult = evaluate(input);
+          if (evalResult === Infinity) {
+            setResult('Infinity');
+          } else if (isNaN(evalResult)) {
+            setResult('NaN');
+          } else {
+            setResult(evalResult.toString());
+          }
         }
       } catch {
         setResult('Error');
